@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { GlobalContext } from "../../context";
 import { RecipeItem } from "../../components/recipe-item";
-import { MdAddCircleOutline } from "react-icons/md";
+import { FaPlusSquare } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import 'ldrs/ring';
 
@@ -26,7 +26,7 @@ export const Favourites = () => {
           </h1>
           <button>
             <NavLink to={"/"}>
-              <MdAddCircleOutline className="text-4xl text-orange-600" />
+              <FaPlusSquare className="text-4xl text-orange-600" />
             </NavLink>
           </button>
         </div>
