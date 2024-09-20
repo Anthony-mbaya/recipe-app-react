@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const GlobalContext = createContext(null);
@@ -11,6 +11,27 @@ export default function GlobalState({ children }) {
   const [favList, setFavList] = useState([]);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setLoading(true);
+    const fetchRecipes = async () => {
+        try {
+            const res = await fetch('https://dummyjson.com/recipes');
+            const data = await res.json();
+            //console.log('Fetched Recipes:', data);
+
+            if (data?.recipes) {
+                setRecipeList(data.recipes);
+            }
+            setLoading(false);
+        } catch (error) {
+            console.error('Error fetching recipes:', error);
+            setLoading(false);
+        }
+    };
+
+    fetchRecipes();
+}, []);
 
   async function handleSubmit(event) {
     event.preventDefault();

@@ -7,7 +7,7 @@ function Navlink({ path, name }) {
         <li className="list-none">
             <NavLink
                 to={path}
-                className='text-white hover:text-slate-500 duration-300'>
+                className='text-white hover:text-slate-500 duration-300 px-2 py-2'>
                 {name}
             </NavLink>
         </li>

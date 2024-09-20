@@ -2,12 +2,23 @@ import { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { GlobalContext } from "../../context";
 import { FaCheckCircle, FaHeart } from "react-icons/fa";
+import "ldrs/ring";
 
 export const Details = () => {
   //used to retrieve the dynamic parameters from the current route
   const { id } = useParams();
-  const { recipeDetailsData, setRecipeDetailsData, handleAddToFav, favList, loading } =
-    useContext(GlobalContext);
+  const {
+    recipeDetailsData,
+    setRecipeDetailsData,
+    handleAddToFav,
+    favList,
+    loading,
+  } = useContext(GlobalContext);
+  if (loading) {
+    <div className="flex items-center justify-center">
+      <l-ring size="40" color="coral"></l-ring>
+    </div>;
+  }
   useEffect(() => {
     async function getRecipeDetails() {
       const res = await fetch(`https://dummyjson.com/recipes/${id}`);
@@ -20,9 +31,7 @@ export const Details = () => {
     }
     getRecipeDetails();
   }, []);
-  if(loading){
-    return <div>Loading...wait please!</div>;
-}
+
   return (
     <div className="container mx-auto py-10 grid grid-cols-1 lg:grid-cols-2 gap-10">
       <div className="row-start-2 lg:row-start-auto">

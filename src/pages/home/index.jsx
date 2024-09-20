@@ -1,11 +1,13 @@
 import { useContext } from "react"
 import { GlobalContext } from "../../context"
 import { RecipeItem } from "../../components/recipe-item";
+import 'ldrs/ring';
 
 export const Home =()=> {
     const { recipeList, loading } = useContext(GlobalContext);
     if(loading){
-        return <div>Loading...wait please!</div>;
+        //ring loader from ldrs
+        return <div className="flex items-center justify-center"><l-ring size='40' color='coral'></l-ring></div>;
     }
     return(
         <div className="py-8 container mx-auto flex flex-wrap justify-center gap-10 ">
