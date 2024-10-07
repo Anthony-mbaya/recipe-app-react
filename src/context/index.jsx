@@ -1,3 +1,4 @@
+import axios from "axios";
 import { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -9,29 +10,38 @@ export default function GlobalState({ children }) {
   const [recipeList, setRecipeList] = useState([]);
   const [recipeDetailsData, setRecipeDetailsData] = useState(null);
   const [favList, setFavList] = useState([]);
+  const [getUserName, setGetUserName] = useState(false);
+  //const [authToken, setAuthToken] = useState(localStorage.getItem('token'));
+  const [isAuth, setIsAuth] = useState(false);
 
   const navigate = useNavigate();
 
+
   useEffect(() => {
     setLoading(true);
-    const fetchRecipes = async () => {
+    if (isAuth){
+      const fetchRecipes = async () => {
         try {
-            const res = await fetch('https://dummyjson.com/recipes');
-            const data = await res.json();
-            //console.log('Fetched Recipes:', data);
-
-            if (data?.recipes) {
-                setRecipeList(data.recipes);
+          //const res = await fetch("https://dummyjson.com/recipes");
+          const res = await axios.get("http://127.0.0.1:8000/api/recipe/recipes/",{
+            headers: {
+              'Authorization': `Token ${localStorage.getItem('token')}`,
             }
-            setLoading(false);
+          });
+          const data = res.data;
+          console.log('Fetched Recipes:', data);
+          if (data) {
+            setRecipeList(data);
+          }
+          setLoading(false);
         } catch (error) {
-            console.error('Error fetching recipes:', error);
-            setLoading(false);
+          console.error("Error fetching recipes:", error);
+          setLoading(false);
         }
-    };
-
+      };
     fetchRecipes();
-}, []);
+    }
+  }, [isAuth]);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -49,7 +59,7 @@ export default function GlobalState({ children }) {
         setRecipeList(filteredRecipes);
         setLoading(false);
         setSearchParam("");
-        navigate('/');
+        navigate("/");
       }
     } catch (error) {
       //console.log(error);
@@ -69,7 +79,7 @@ export default function GlobalState({ children }) {
     setFavList(copyFavList);
   }
 
-  console.log(favList);
+  //console.log(favList);
 
   return (
     <GlobalContext.Provider
@@ -82,7 +92,10 @@ export default function GlobalState({ children }) {
         recipeList,
         recipeDetailsData,
         setRecipeDetailsData,
-        favList
+        favList,
+        getUserName,
+        setGetUserName,
+        setIsAuth,
       }}
     >
       {children}

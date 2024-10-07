@@ -33,7 +33,7 @@ export const Details = () => {
   }, []);
 
   return (
-    <div className="container mx-auto py-10 grid grid-cols-1 lg:grid-cols-2 gap-10">
+    <div className="container mx-auto py-10 grid grid-cols-1 lg:grid-cols-2 gap-10 pt-[10rem]">
       <div className="row-start-2 lg:row-start-auto">
         <img
           src={recipeDetailsData?.image}

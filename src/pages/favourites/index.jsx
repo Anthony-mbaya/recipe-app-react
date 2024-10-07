@@ -11,7 +11,7 @@ export const Favourites = () => {
     return <div className="flex items-center justify-center"><l-ring size='40' color='coral'></l-ring></div>;
   }
   return (
-    <div className="py-8 container mx-auto flex flex-wrap justify-center gap-10 ">
+    <div className="pt-[10rem] py-8 container mx-auto flex flex-wrap justify-center gap-10 ">
       {/* 5render the list 0of recipes */}
       {favList && favList.length > 0 ? (
         <div className="flex flex-wrap gap-10 mx-auto justify-center">

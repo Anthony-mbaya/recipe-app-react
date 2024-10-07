@@ -7,10 +7,10 @@ export const Home =()=> {
     const { recipeList, loading } = useContext(GlobalContext);
     if(loading){
         //ring loader from ldrs
-        return <div className="flex items-center justify-center"><l-ring size='40' color='coral'></l-ring></div>;
+        return <div className="pt-[10rem] flex items-center justify-center"><l-ring size='40' color='coral'></l-ring></div>;
     }
     return(
-        <div className="py-8 container mx-auto flex flex-wrap justify-center gap-10 ">
+        <div className="pt-[10rem] py-8 container mx-auto flex flex-wrap justify-center gap-10 ">
             {/* 5render the list 0of recipes */}
             {
                 recipeList && recipeList.length > 0 ?
