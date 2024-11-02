@@ -2,3 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+.create-form{
+    @apply w-fit mx-auto flex flex-col space-y-5
+}
+.create-form input, textarea{
+    @apply rounded-md px-3 py-1 bg-slate-800 text-white  focus:outline-green-500;
+    @apply border-2 border-red-400 focus:border-none
+}
+.create-form textarea{
+    @apply min-h-32
+}
+.adders{
+    @apply flex flex-col space-y-2 border-2 border-red-400 p-2 rounded-md
+}
+.adders div{
+    @apply ml-5 w-fit rounded-md
+}
+.addbtn{
+    @apply bg-green-500 w-fit ml-5 p-1 rounded-md
+}

@@ -7,13 +7,14 @@ import { Verification } from "./pages/auth";
 import { Logout } from "./pages/auth/logout";
 import { Profile } from "./pages/profile";
 import { EditProfile } from "./pages/profile/edit-profile";
-
+import { CreateEdit } from "./pages/create-edit";
+import './index.css';
 export const App = () => {
   return (
     <div>
       <div className="w-screen min-h-screen p-6 bg-[#0f172a] text-white text-lg">
         <Navbar /> {/* appear globally in all pages */}
-        { /*routes will manage routing*/}
+        {/*routes will manage routing*/}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Verification />} />
@@ -21,11 +22,13 @@ export const App = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/profile-edit" element={<EditProfile />} />
           <Route path="/favourites" element={<Favourites />} />
+          <Route path="/create-edit" element={<CreateEdit />} />
           <Route
             path="/recipe-item/:id" //id can be dynamic
-            element={<Details />} />
+            element={<Details />}
+          />
         </Routes>
       </div>
     </div>
-  )
-}
+  );
+};

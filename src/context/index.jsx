@@ -8,28 +8,52 @@ export default function GlobalState({ children }) {
   const [searchParam, setSearchParam] = useState("");
   const [loading, setLoading] = useState(false);
   const [recipeList, setRecipeList] = useState([]);
+  const [images, setImages] = useState({});
   const [recipeDetailsData, setRecipeDetailsData] = useState(null);
+  const [ingredientsList, setIngredientsList] = useState([]);
+  const [tagList, setTagList] = useState([]);
   const [favList, setFavList] = useState([]);
   const [getUserName, setGetUserName] = useState(false);
   //const [authToken, setAuthToken] = useState(localStorage.getItem('token'));
   const [isAuth, setIsAuth] = useState(false);
 
   const navigate = useNavigate();
-
+  /*
+  useEffect(() => {
+    if(!isAuth){
+      const defaultData = async () =>{
+        try {
+          const res = await fetch("https://dummyjson.com/recipes");
+          const data = await res.json();
+          if(data?.recipes){
+            setRecipeList(data.recipes);
+          }
+          } catch (error) {
+            console.error(error);
+          }
+      };
+      defaultData();
+    }
+  },[!isAuth]);
+  console.log(recipeList);
+*/
 
   useEffect(() => {
     setLoading(true);
-    if (isAuth){
+    if (isAuth) {
       const fetchRecipes = async () => {
         try {
           //const res = await fetch("https://dummyjson.com/recipes");
-          const res = await axios.get("http://127.0.0.1:8000/api/recipe/recipes/",{
-            headers: {
-              'Authorization': `Token ${localStorage.getItem('token')}`,
+          const res = await axios.get(
+            "http://127.0.0.1:8000/api/recipe/recipes/",
+            {
+              headers: {
+                Authorization: `Token ${localStorage.getItem("token")}`,
+              },
             }
-          });
+          );
           const data = res.data;
-          console.log('Fetched Recipes:', data);
+          console.log("Fetched Recipes:", data);
           if (data) {
             setRecipeList(data);
           }
@@ -39,9 +63,36 @@ export default function GlobalState({ children }) {
           setLoading(false);
         }
       };
-    fetchRecipes();
+      fetchRecipes();
     }
   }, [isAuth]);
+  //console.log(recipeList);
+  const fetchImage = async (id) => {
+    //console.log("Fetching image for recipe ID:", id);
+    if (!images[id]) {
+      try {
+        const res = await axios.get(
+          `http://127.0.0.1:8000/api/recipe/recipes/${id}/`,
+          {
+            headers: {
+              Authorization: `Token ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        const data = res.data;
+        setImages((prevImages) => ({ ...prevImages, [id]: data.image }));
+      } catch (error) {
+        console.error("error");
+      }
+    }
+  };
+  useEffect(() => {
+    if(recipeList.length > 0){
+      recipeList.forEach((recipe) => {
+        fetchImage(recipe.id);
+      })
+    }
+  }, [recipeList]);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -79,8 +130,6 @@ export default function GlobalState({ children }) {
     setFavList(copyFavList);
   }
 
-  //console.log(favList);
-
   return (
     <GlobalContext.Provider
       value={{
@@ -96,6 +145,12 @@ export default function GlobalState({ children }) {
         getUserName,
         setGetUserName,
         setIsAuth,
+        fetchImage,
+        images,
+        ingredientsList,
+        setIngredientsList,
+        tagList,
+        setTagList,
       }}
     >
       {children}
