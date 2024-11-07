@@ -12,37 +12,37 @@ export const Verification = () => {
 
   return (
     <div className="container pt-[10rem]">
-    <div className="container flex flex-col gap-2 mx-auto items-center justify-center bg-gray-800 rounded-xl shadow-lg shadow-gray-500 w-fit px-3 py-4">
-      <h1 className="text-green-600 font-bold">Verification</h1>
-      {formName ? (
-        <>
-          <Login />
-          <p className="text-[0.9em]">
-            Don't have an account?{" "}
-            <button
-              className=" text-white py-1 text-[0.9em] underline"
-              onClick={() => setFormName(false)}
-            >
-              register
-            </button>
-          </p>
-        </>
-      ) : (
-        <>
-          <Register />
-          <p className="text-[0.9em]">
-            Already have an account?{" "}
-            <button
-              className="text-white text-[0.9em] py-1 underline"
-              onClick={() => setFormName(true)}
-            >
-              login
-            </button>
-          </p>
-        </>
-      )}
-      <button onClick={handleToggle}>{formName}</button>
-    </div>
+      <div className="container flex flex-col gap-2 mx-auto items-center justify-center bg-gray-800 rounded-xl shadow-lg shadow-gray-500 w-fit px-3 py-4">
+        <h1 className="text-green-600 font-bold">Verification</h1>
+        {formName ? (
+          <>
+            <Login />
+            <p className="text-[0.9em]">
+              Don't have an account?{" "}
+              <button
+                className=" text-white py-1 text-[0.9em] underline"
+                onClick={() => setFormName(false)}
+              >
+                register
+              </button>
+            </p>
+          </>
+        ) : (
+          <>
+            <Register />
+            <p className="text-[0.9em]">
+              Already have an account?{" "}
+              <button
+                className="text-white text-[0.9em] py-1 underline"
+                onClick={() => setFormName(true)}
+              >
+                login
+              </button>
+            </p>
+          </>
+        )}
+        <button onClick={handleToggle}>{formName}</button>
+      </div>
     </div>
   );
 };
@@ -148,10 +148,11 @@ const Login = () => {
         },
       });
       const user = get_res.data.name;
-      if (user){
+      if (user) {
         setGetUserName(user);
-      }else{
-        setGetUserName('');
+        localStorage.setItem("user", user);
+      } else {
+        setGetUserName("");
       }
       navigateto("/");
       setMsg("Login Successfull");

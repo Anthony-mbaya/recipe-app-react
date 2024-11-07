@@ -6,14 +6,14 @@
     @apply w-fit mx-auto flex flex-col space-y-5
 }
 .create-form input, textarea{
-    @apply rounded-md px-3 py-1 bg-slate-800 text-white  focus:outline-green-500;
-    @apply border-2 border-red-400 focus:border-none
+    @apply rounded-md px-3 py-1 bg-slate-800 text-white;
+    @apply focus:outline-blue-400 focus:outline-2 w-full outline-none
 }
 .create-form textarea{
     @apply min-h-32
 }
 .adders{
-    @apply flex flex-col space-y-2 border-2 border-red-400 p-2 rounded-md
+    @apply flex flex-col space-y-2 p-2 rounded-md w-fit
 }
 .adders div{
     @apply ml-5 w-fit rounded-md

@@ -8,8 +8,22 @@ import { Logout } from "./pages/auth/logout";
 import { Profile } from "./pages/profile";
 import { EditProfile } from "./pages/profile/edit-profile";
 import { CreateEdit } from "./pages/create-edit";
+import { GlobalContext } from "./context";
 import './index.css';
+import { useContext, useEffect } from "react";
 export const App = () => {
+  const { setIsAuth } = useContext(GlobalContext);
+
+  useEffect(() => {
+    // Check for the token in localStorage when the app loads
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      setIsAuth(true); // Set user as authenticated if token exists
+    } else {
+      setIsAuth(false); // Set user as not authenticated if token is missing
+    }
+  }, [setIsAuth]);
   return (
     <div>
       <div className="w-screen min-h-screen p-6 bg-[#0f172a] text-white text-lg">

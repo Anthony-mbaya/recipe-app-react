@@ -7,8 +7,9 @@ export const Logout = () => {
   const { setGetUserName } = useContext(GlobalContext);
   useEffect(() => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     setGetUserName("");
-    navigate("/login");
+    navigate("/");
   }, [navigate, setGetUserName]);
 
   return null;

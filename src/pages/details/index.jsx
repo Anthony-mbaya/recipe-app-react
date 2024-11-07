@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { GlobalContext } from "../../context";
 import { FaCheckCircle, FaHeart } from "react-icons/fa";
 import axios from "axios";
@@ -18,7 +18,10 @@ export const Details = () => {
     setIngredientsList,
     tagList,
     setTagList,
+    setRecipeList,
+    recipeList,
   } = useContext(GlobalContext);
+  const navigate = useNavigate();
   if (loading) {
     <div className="flex items-center justify-center">
       <l-ring size="40" color="coral"></l-ring>
@@ -39,13 +42,16 @@ export const Details = () => {
       //console.log(data);
       if (data) {
         setRecipeDetailsData(data);
+        setIngredientsList(data?.ingredients);
+        setTagList(data?.tags);
         //console.log(data.data);
       }
     }
     getRecipeDetails();
-  }, []);
-  //console.log(recipeList);
-  useEffect(() => {
+  }, [id]);
+  //console.log(tagList);
+
+  /*useEffect(() => {
     const getIngredients = async () => {
       try {
         const res = await axios.get(
@@ -56,8 +62,10 @@ export const Details = () => {
             },
           }
         );
-        const data = res.data[0].ingredients;
-        if (data.length > 0) {
+        const data = res.data;
+        //console.log(data);
+
+        /*if (data.length > 0) {
           setIngredientsList(data);
         }
       } catch (error) {
@@ -66,7 +74,7 @@ export const Details = () => {
       }
     };
     getIngredients();
-  }, []);
+  }, [id]);
   useEffect(() => {
     const getTags = async () => {
       try {
@@ -79,7 +87,9 @@ export const Details = () => {
           }
         );
         const data = res.data[0].tags;
-        if (data.length > 0) {
+        //console.log(data);
+
+        /*(if (data.length > 0) {
           setTagList(data);
         }
       } catch (error) {
@@ -88,11 +98,29 @@ export const Details = () => {
       }
     };
     getTags();
-  }, []);
-  console.log(tagList);
+  }, [id]);*/
+  //console.log(tagList);
+
+  const handleDeleteRecipe = async (id) =>{
+    try{
+    const deleteUrl = `http://127.0.0.1:8000/api/recipe/recipes/${id}/`;
+    const res = await axios.delete(deleteUrl, {
+      headers: {
+      Authorization: `Token ${localStorage.getItem('token')}`,
+    },});
+    setRecipeList(prevList => prevList.filter(item => item.id !== id));
+    if(res){
+      console.log('Recipe deleted', res.data);
+      navigate('/')
+    }
+  }catch(error){
+    console.error(error);
+
+  }
+  }
 
   return (
-    <div className="container mx-auto py-10 grid grid-cols-1 lg:grid-cols-2 gap-10 pt-[10rem]">
+    <div className="container mx-auto py-10 grid grid-cols-1 lg:grid-cols-2 gap-10 pt-[6.5rem] sm:pt-[8rem] md:pt-[7rem] lg:pt-[6rem]">
       <div className="row-start-2 lg:row-start-auto">
         <img
           src={recipeDetailsData?.image}
@@ -101,16 +129,16 @@ export const Details = () => {
         />
       </div>
       <div className="flex flex-col gap-3">
-        <h3 className="font-bold tetx-2xl truncate text-orange-600">
+        <h3 className="font-bold text-2xl capitalize truncate text-orange-600">
           {recipeDetailsData?.title}
         </h3>
-        <span className="text-sm text-green-400 font-medium">
-          {recipeDetailsData?.link}
+        <span className="text-sm text-blue-600 underline underline-offset-2 cursor-pointer font-light">
+          <a href={recipeDetailsData?.link}>{recipeDetailsData?.link}</a>
         </span>
-        <span className="text-sm text-green-400 font-medium">
+        <span className="text-sm text-white font-medium">
           $ {recipeDetailsData?.price}
         </span>
-        <span className="text-sm text-green-400 font-medium">
+        <span className="text-sm text-white font-medium">
           {recipeDetailsData?.time_minutes} minutes
         </span>
         <div>
@@ -172,8 +200,14 @@ export const Details = () => {
               <p>no tags</p>
             )}
           </ul>
+          <button
+          onClick={() => handleDeleteRecipe(recipeDetailsData?.id)}
+          className="p-3 px-8 rounded-lg text-sm font-medium tracking-wider mt-3 inline-block shadow-md bg-red-600 text-white hover:bg-slate-800"
+          >Delete
+          </button>
         </div>
       </div>
+
     </div>
   );
 };

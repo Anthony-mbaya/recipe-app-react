@@ -17,6 +17,13 @@ export default function GlobalState({ children }) {
   //const [authToken, setAuthToken] = useState(localStorage.getItem('token'));
   const [isAuth, setIsAuth] = useState(false);
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsAuth(true); // Set authenticated if token is present
+      //alert('haha');
+    }
+  }, []);
   const navigate = useNavigate();
   /*
   useEffect(() => {
@@ -39,8 +46,9 @@ export default function GlobalState({ children }) {
 */
 
   useEffect(() => {
-    setLoading(true);
+
     if (isAuth) {
+      setLoading(true);
       const fetchRecipes = async () => {
         try {
           //const res = await fetch("https://dummyjson.com/recipes");
@@ -94,18 +102,25 @@ export default function GlobalState({ children }) {
     }
   }, [recipeList]);
 
-  async function handleSubmit(event) {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    setLoading(true);
     try {
-      const res = await fetch(`https://dummyjson.com/recipes`);
-      const data = await res.json();
-      //console.log(data);
+      setLoading(true);
+      const url = 'http://127.0.0.1:8000/api/recipe/recipes/';
+      const res = await axios.get(url, {
+        headers: {
+          Authorization: `Token ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+      //const res = await fetch(`https://dummyjson.com/recipes`);
+      const data = res.data;
+      console.log(data);
 
-      if (data?.recipes) {
-        const recipe_list = data.recipes;
+      if (data) {
+        const recipe_list = data;
         const filteredRecipes = recipe_list.filter((recipe) =>
-          recipe.name.toLowerCase().includes(searchParam.toLowerCase())
+          recipe.title.toLowerCase().includes(searchParam.toLowerCase())
         );
         setRecipeList(filteredRecipes);
         setLoading(false);
@@ -138,6 +153,7 @@ export default function GlobalState({ children }) {
         handleSubmit,
         loading,
         handleAddToFav,
+        setRecipeList,
         recipeList,
         recipeDetailsData,
         setRecipeDetailsData,
@@ -145,6 +161,7 @@ export default function GlobalState({ children }) {
         getUserName,
         setGetUserName,
         setIsAuth,
+        isAuth,
         fetchImage,
         images,
         ingredientsList,
