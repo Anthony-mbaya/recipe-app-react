@@ -1,5 +1,5 @@
-import { useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { GlobalContext } from "../../context";
 import { RecipeItem } from "../../components/recipe-item";
 import "ldrs/ring";
@@ -17,10 +17,20 @@ export const Home = () => {
   }, []);
 
   // Render AuthUserDisplay if authenticated; otherwise, render UnAuthUserDisplay
-  return isAuth ? <AuthUserDisplay /> : <UnAuthUserDisplay />;
+  return (
+    isAuth ? <AuthUserDisplay /> : <UnAuthUserDisplay />
+  );
 };
 function AuthUserDisplay() {
   const { recipeList, loading } = useContext(GlobalContext);
+  const location = useLocation();
+  const [popMsg, setPopMsg] = useState(location.state?.message || '');
+  useEffect(() => {
+    if(popMsg){
+      const timer = setTimeout(() => setPopMsg(''), 5000);
+      return () => clearTimeout(timer);
+    }
+  },[popMsg])
   if (loading) {
     //ring loader from ldrs
     return (
@@ -31,15 +41,18 @@ function AuthUserDisplay() {
   }
   return (
     <div className="pt-[4rem] sm:pt-[7rem] md:pt-[6rem] lg:pt-[5rem] py-8 container mx-auto flex flex-wrap justify-center gap-10 ">
+      {
+        popMsg && <div className="fixed z-50 top-32 text-sm px-2 py-3 bg-white bg-opacity-85 rounded-md font-semibold tracking-wider text-black left-0">{popMsg}</div>
+      }
       {/* 5render the list 0of recipes */}
       <Link to="/create-edit">
         {" "}
-        <div className="w-fit h-fit fixed hidden sm:block top-[10rem] right-4 cursor-pointer bg-white hover:bg-slate-700 hover:scale-105 duration-300 bg-opacity-95 text-green-500 font-semibold px-2 py-3 rounded-lg ">
+        <div className="w-fit font-light text-sm lg:text-[1rem] z-50 h-fit fixed hidden sm:block top-[10rem] right-4 cursor-pointer bg-slate-100 hover:bg-slate-700 hover:scale-90 duration-300 ease-in-out bg-opacity-85 text-green-600 px-2 py-3 hover:outline outline-white rounded-lg hover:text-white ">
           Create Recipe
         </div>
       </Link>
       {recipeList && recipeList.length > 0 ? (
-        <div className="flex flex-wrap gap-10 mx-auto justify-center">
+        <div className="flex flex-wrap gap-10 md:gap-6 lg:gap-4 mx-auto justify-center">
           {recipeList.map((item, index) => (
             <RecipeItem item={item} key={index} />
           ))}
@@ -66,7 +79,7 @@ function UnAuthUserDisplay() {
         </p>
 
       </header>
-<div className="container w-full text-end">
+<div className="container w-full text-center sm:text-end">
   <span className="border-2 border-green-500 text-white text-2xl font-bold px-10 py-3 rounded-full">9,000+ Users</span>
   </div>
       <section className="mt-3 text-center px-4">
@@ -119,12 +132,12 @@ function UnAuthUserDisplay() {
 
         </p>
       </section>
-       <div class="mt-8 text-center">
-    <p class="text-lg text-gray-600 mb-4">
+       <div className="mt-8 text-center">
+    <p className="text-lg text-gray-600 mb-4">
       Join us to access exclusive features, save your favorite recipes, and share your culinary creations with a growing community.
     </p>
     <Link to='/login'>
-    <button class="bg-yellow-500 text-white font-semibold py-3 px-6 rounded-lg hover:bg-yellow-600 transition duration-300">
+    <button className="bg-yellow-500 text-white font-semibold py-3 px-6 rounded-lg hover:bg-yellow-600 transition duration-300">
       Sign Up & Start Cooking
     </button>
     </Link>

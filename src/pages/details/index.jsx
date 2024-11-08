@@ -19,7 +19,6 @@ export const Details = () => {
     tagList,
     setTagList,
     setRecipeList,
-    recipeList,
   } = useContext(GlobalContext);
   const navigate = useNavigate();
   if (loading) {
@@ -120,7 +119,7 @@ export const Details = () => {
   }
 
   return (
-    <div className="container mx-auto py-10 grid grid-cols-1 lg:grid-cols-2 gap-10 pt-[6.5rem] sm:pt-[8rem] md:pt-[7rem] lg:pt-[6rem]">
+    <div className="container mx-auto py-10 grid grid-cols-1 lg:grid-cols-2 gap-10 pt-[6.5rem] sm:pt-[9rem] md:pt-[7rem] lg:pt-[6rem]">
       <div className="row-start-2 lg:row-start-auto">
         <img
           src={recipeDetailsData?.image}

@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { GlobalContext } from "../../context";
 //import { useParams } from "react-router-dom";
 
 export const CreateEdit = () => {
@@ -13,8 +15,9 @@ export const CreateEdit = () => {
   const [ingredients, setIngredients] = useState([{ name: "" }]);
   const [tags, setTags] = useState([{ name: "" }]);
   const [recipeImage, setRecipeImage] = useState(null);
+  const { setAddedItem } = useContext(GlobalContext);
   //console.log(id);
-
+  const navigate = useNavigate();
   const handleChangeIngredients = (index, e) => {
     const newIngredients = [...ingredients];
     newIngredients[index].name = e.target.value;
@@ -63,7 +66,7 @@ export const CreateEdit = () => {
         },
         auth
       );
-      console.log(response.data);
+      //console.log(response.data);
       const currRecipeId = response.data.id;
       const formData = new FormData();
       if (currRecipeId && recipeImage) {
@@ -76,110 +79,127 @@ export const CreateEdit = () => {
         },
       });
       console.log(imgResponse.data);
+      setAddedItem(true);
+      navigate('/');
     } catch (error) {
       console.error(
         "Error adding recipe:",
         error.response ? error.response.data : error.message
       );
+      setAddedItem(false);
     }
   };
   return (
-    <div className="mt-[6rem] w-full py-2">
-      <form onSubmit={handleSubmit} className="create-form">
-        <input
-          type="text"
-          name="title"
-          id="title"
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Enter Recipe Nmae"
-          required
-        />
-        <textarea
-          name="description"
-          id="description"
-          cols="30"
-          rows="2"
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="My recipe ..."
-          required
-        ></textarea>
-        <input
-          type="number"
-          name="time"
-          id="time"
-          onChange={(e) => setTime(e.target.value)}
-          placeholder="Time in minutes"
-          required
-          max={60}
-          min={5}
-        />
-        <input
-          type="text"
-          name="price"
-          id="price"
-          onChange={(e) => setPrice(e.target.value)}
-          placeholder="Price in usd"
-          required
-        />
-        <input
-          type="text"
-          name="link"
-          id="link"
-          onChange={(e) => setLink(e.target.value)}
-          placeholder="Link"
-        />
-        <div className="adders">
-          <h2>Add Ingredients</h2>
-          {ingredients.map((ingredient, index) => (
-            <div key={index} className="input-grou">
-              <input
-                type="text"
-                value={ingredient.name}
-                onChange={(e) => handleChangeIngredients(index, e)}
-                placeholder={`Item ${index + 1}`}
-              />
-            </div>
-          ))}
-          <button type="button" onClick={addNewIngredient} className="addbtn">
-            {" "}
-            <FaPlus />{" "}
-          </button>
-        </div>
-        <div className="adders">
-          <h2>Add Tags</h2>
-          {tags.map((tag, index) => (
-            <div key={index} className="input-grou">
-              <input
-                type="text"
-                value={tag.name}
-                onChange={(e) => handleChangeTags(index, e)}
-                placeholder={`Item ${index + 1}`}
-              />
-            </div>
-          ))}
-          <button type="button" onClick={addNewTag} className="addbtn">
-            {" "}
-            <FaPlus />{" "}
-          </button>
-        </div>
-
-          <label
-            htmlFor="image"
-            className="flex flex-col items-center p-4 bg-blue-400 rounded-lg shadow-lg cursor-pointer transition duration-300 ease-in-out"
-          >
-            <span className="mt-2 text-base leading-normal">Upload Image</span>
+    <div className="mt-[6rem] sm:mt-[9rem] w-full py-2 text-sm">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <div className="flex flex-col md:flex-row gap-0">
+          <div className="create-form">
             <input
-              type="file"
-              name="upload-image"
-              id="image"
-              onChange={(e) => setRecipeImage(e.target.files[0])}
-              accept="image/*"
-              className="hidden"
+              type="text"
+              name="title"
+              id="title"
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Enter Recipe Nmae"
+              required
             />
-          </label>
+            <textarea
+              name="description"
+              id="description"
+              cols="30"
+              rows="2"
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="My recipe ..."
+              required
+            ></textarea>
+            <input
+              type="number"
+              name="time"
+              id="time"
+              onChange={(e) => setTime(e.target.value)}
+              placeholder="Time in minutes"
+              required
+              max={60}
+              min={5}
+            />
+            <input
+              type="text"
+              name="price"
+              id="price"
+              onChange={(e) => setPrice(e.target.value)}
+              placeholder="Price in usd"
+              required
+            />
+            <input
+              type="text"
+              name="link"
+              id="link"
+              onChange={(e) => setLink(e.target.value)}
+              placeholder="Link"
+            />
+          </div>
+          <div className="create-form">
+            <div className="adders">
+              <h2>Add Ingredients</h2>
+              {ingredients.map((ingredient, index) => (
+                <div key={index} className="input-grou">
+                  <input
+                    type="text"
+                    value={ingredient.name}
+                    onChange={(e) => handleChangeIngredients(index, e)}
+                    placeholder={`Item ${index + 1}`}
+                  />
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={addNewIngredient}
+                className="addbtn"
+              >
+                {" "}
+                <FaPlus />{" "}
+              </button>
+            </div>
+            <div className="adders">
+              <h2>Add Tags</h2>
+              {tags.map((tag, index) => (
+                <div key={index} className="input-grou">
+                  <input
+                    type="text"
+                    value={tag.name}
+                    onChange={(e) => handleChangeTags(index, e)}
+                    placeholder={`Item ${index + 1}`}
+                  />
+                </div>
+              ))}
+              <button type="button" onClick={addNewTag} className="addbtn">
+                {" "}
+                <FaPlus />{" "}
+              </button>
+            </div>
 
-
-        <input type="submit" value="submit" />
+            <label
+              htmlFor="image"
+              className="flex flex-col items-center p-4 bg-blue-400 rounded-lg shadow-lg cursor-pointer transition duration-300 ease-in-out"
+            >
+              <span className="mt-2 text-base leading-normal">
+                Upload Image
+              </span>
+              <input
+                type="file"
+                name="upload-image"
+                id="image"
+                onChange={(e) => setRecipeImage(e.target.files[0])}
+                accept="image/*"
+                className="hidden"
+              />
+            </label>
+          </div>
+        </div>
+        <input
+          type="submit"
+          value="submit"
+          className="w-1/2 sm:w-1/4 mx-auto py-2 cursor-pointer rounded-md bg-green-800"
+        />
       </form>
     </div>
   );

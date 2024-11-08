@@ -16,6 +16,7 @@ export default function GlobalState({ children }) {
   const [getUserName, setGetUserName] = useState(false);
   //const [authToken, setAuthToken] = useState(localStorage.getItem('token'));
   const [isAuth, setIsAuth] = useState(false);
+  const [addedItem, setAddedItem] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -73,7 +74,7 @@ export default function GlobalState({ children }) {
       };
       fetchRecipes();
     }
-  }, [isAuth]);
+  }, [isAuth, addedItem]);
   //console.log(recipeList);
   const fetchImage = async (id) => {
     //console.log("Fetching image for recipe ID:", id);
@@ -95,9 +96,11 @@ export default function GlobalState({ children }) {
     }
   };
   useEffect(() => {
+    setSearchParam("");
     if(recipeList.length > 0){
       recipeList.forEach((recipe) => {
         fetchImage(recipe.id);
+
       })
     }
   }, [recipeList]);
@@ -115,7 +118,7 @@ export default function GlobalState({ children }) {
     );
       //const res = await fetch(`https://dummyjson.com/recipes`);
       const data = res.data;
-      console.log(data);
+      //console.log(data);
 
       if (data) {
         const recipe_list = data;
@@ -125,7 +128,7 @@ export default function GlobalState({ children }) {
         setRecipeList(filteredRecipes);
         setLoading(false);
         setSearchParam("");
-        navigate("/");
+        //navigate("/");
       }
     } catch (error) {
       //console.log(error);
@@ -134,9 +137,11 @@ export default function GlobalState({ children }) {
     }
   }
   function handleAddToFav(currItem) {
-    //console.log(currItem);
+    //create copy of current
     let copyFavList = [...favList];
+    //check if it exists
     const index = copyFavList.findIndex((item) => item.id === currItem.id);
+    //-1 index if its not there then push
     if (index === -1) {
       copyFavList.push(currItem);
     } else {
@@ -168,6 +173,7 @@ export default function GlobalState({ children }) {
         setIngredientsList,
         tagList,
         setTagList,
+        setAddedItem,
       }}
     >
       {children}

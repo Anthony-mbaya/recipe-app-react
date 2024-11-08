@@ -58,7 +58,7 @@ export const Navbar = () => {
         <h2
           className={`${
             isAuth ? "w-fit" : "w-full"
-          } md:px-4 sm:px-1 md:text-3xl text-2xl font-semibold text-center`}
+          } md:px-0 sm:px-1 md:text-3xl text-2xl font-semibold text-center`}
         >
           <Navlink path={"/"} name={"Online Restoo"} />
         </h2>
@@ -74,32 +74,38 @@ export const Navbar = () => {
             placeholder="search item..."
             className={`${
               isAuth ? "block" : "hidden"
-            } bg-slate-600/100 border text-sm text-center rounded-full outline-none mx-auto w-[20rem] sm:w-[16rem] md:w-[17rem] py-2 lg:w-[40rem] shadow-lg shadow-slate-800 focus:shadow-slate-700`}
+            } bg-slate-600/100 border text-sm text-center rounded-full outline-none mx-auto w-[20rem] sm:w-[32rem] md:w-[17rem] py-2 lg:w-[40rem] shadow-lg shadow-slate-800 focus:shadow-slate-700`}
           />
         </form>
         <ul className="sm:w-fit sm:flex gap-2 sm:gap-2 hidden sm:px-2 text-sm mx-auto justify-end items-center">
           <Navlink path={"/"} name={"Home"} />
-          <Navlink path={"/favourites"} name={"Favourites"} />
+
           {isAuth ? (
             <>
+            <Navlink path={"/favourites"} name={"Favourites"} />
               <Navlink path={"/profile"} name={"Profile"} />
               <Navlink path={"/logout"} name={"Logout"} />
             </>
           ) : (
-            <Navlink path={"/login"} name={"Login"} />
+            <Navlink path={"/login"} name={"SignIn/SignUp?"} />
           )}
         </ul>
 
         <button
           onClick={handleShowSideBar}
-          className={`${isAuth ? 'top-[8.7rem]' : 'top-[5rem]'} fixed right-9 sm:hidden`}
+          className={`${
+            isAuth ? "top-[8.7rem]" : "top-[5rem]"
+          } fixed right-9 sm:hidden`}
         >
           {showSideBar && (
-            <AiOutlineMenu className="bg-white text-slate-900 p-1 rounded-md" size={32} />
+            <AiOutlineMenu
+              className="bg-white text-slate-900 p-1 rounded-md"
+              size={32}
+            />
           )}
         </button>
         <div
-          className={`sidebar w-3/6 fixed top-32 left-1 rounded-md lg:hidden h-screen bg-slate-700 opacity-90 font-semibold text-white transform transition duration-1000 ease-in-out  px-2
+          className={`sidebar w-3/6 fixed top-32 left-1 rounded-md lg:hidden h-[75%] bg-slate-700 opacity-90 font-semibold text-white transform transition duration-1000 ease-in-out  px-2
         ${showSideBar ? "-translate-x-full" : "translate-x-0"}`}
         >
           <button onClick={handleShowSideBar} className="fixed top-3 right-3">
@@ -118,18 +124,20 @@ export const Navbar = () => {
             }
           >
             <Navlink path={"/"} name={"Home"} onclick={handleShowSideBar} />
-            <Navlink
-              path={"/favourites"}
-              name={"Favourites"}
-              onclick={handleShowSideBar}
-            />
-             <Navlink
-              path={"/create-edit"}
-              name={"Create"}
-              onclick={handleShowSideBar}
-            />
+
             {isAuth ? (
               <>
+                <Navlink
+                  path={"/create-edit"}
+                  name={"Create"}
+                  onclick={handleShowSideBar}
+                />
+                <Navlink
+                  path={"/favourites"}
+                  name={"Favourites"}
+                  onclick={handleShowSideBar}
+                />
+
                 <Navlink
                   path={"/profile"}
                   name={"Profile"}
