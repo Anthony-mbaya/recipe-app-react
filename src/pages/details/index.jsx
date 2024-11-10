@@ -131,6 +131,9 @@ export const Details = () => {
         <h3 className="font-bold text-2xl capitalize truncate text-orange-600">
           {recipeDetailsData?.title}
         </h3>
+        <span className="text-sm text-slate-400 font-light tracking-wider">
+          {recipeDetailsData?.description}
+        </span>
         <span className="text-sm text-blue-600 underline underline-offset-2 cursor-pointer font-light">
           <a href={recipeDetailsData?.link}>{recipeDetailsData?.link}</a>
         </span>

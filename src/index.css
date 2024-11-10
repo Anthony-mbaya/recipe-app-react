@@ -3,20 +3,26 @@
 @tailwind utilities;
 
 .create-form{
-    @apply w-fit mx-auto flex flex-col space-y-5
+    @apply w-full mx-auto flex flex-col space-y-5
 }
 .create-form input, textarea{
     @apply rounded-md px-3 py-1 bg-slate-800 text-white;
-    @apply focus:outline-blue-400 focus:outline-2 w-full outline-none
+    @apply focus:outline-blue-400 focus:outline-2 outline-none
 }
 .create-form textarea{
     @apply min-h-32
 }
 .adders{
-    @apply flex flex-col space-y-2 p-2 rounded-md w-fit
+    @apply flex flex-col space-y-2 p-2 rounded-md w-fit sm:w-full
+}
+.adders h2{
+    @apply px-0
+}
+.adders div input{
+    @apply w-full
 }
 .adders div{
-    @apply ml-5 w-fit rounded-md
+    @apply ml-5 w-fit sm:w-3/4 rounded-md
 }
 .addbtn{
     @apply bg-green-500 w-fit ml-5 p-1 rounded-md

@@ -15,6 +15,8 @@ export const CreateEdit = () => {
   const [ingredients, setIngredients] = useState([{ name: "" }]);
   const [tags, setTags] = useState([{ name: "" }]);
   const [recipeImage, setRecipeImage] = useState(null);
+  const [success, setSuccess] = useState('');
+  const [errMsg, setErrMsg] = useState('');
   const { setAddedItem } = useContext(GlobalContext);
   //console.log(id);
   const navigate = useNavigate();
@@ -39,6 +41,8 @@ export const CreateEdit = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrMsg('');
+    setSuccess('');
     try {
       const auth = {
         headers: {
@@ -80,19 +84,22 @@ export const CreateEdit = () => {
       });
       console.log(imgResponse.data);
       setAddedItem(true);
-      navigate('/');
+
+      navigate('/', {state: {message: 'Item created successful!'}});
     } catch (error) {
-      console.error(
-        "Error adding recipe:",
-        error.response ? error.response.data : error.message
-      );
+      if(error.response){
+        const err = error.response.data.image[0];
+        setErrMsg(err);
+        console.log(err)
+      }
       setAddedItem(false);
     }
   };
   return (
     <div className="mt-[6rem] sm:mt-[9rem] w-full py-2 text-sm">
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <div className="flex flex-col md:flex-row gap-0">
+        {(errMsg || success) && <p className={`${errMsg ? 'text-red-600/100' : 'text-green-600/100'} w-full sm:w-fit bg-white text-sm font-normal text-center rounded-md py-1`}>{errMsg || success}</p>}
+        <div className="flex flex-col md:flex-row gap-2 ">
           <div className="create-form">
             <input
               type="text"
@@ -147,6 +154,7 @@ export const CreateEdit = () => {
                     value={ingredient.name}
                     onChange={(e) => handleChangeIngredients(index, e)}
                     placeholder={`Item ${index + 1}`}
+                    required
                   />
                 </div>
               ))}
@@ -168,6 +176,7 @@ export const CreateEdit = () => {
                     value={tag.name}
                     onChange={(e) => handleChangeTags(index, e)}
                     placeholder={`Item ${index + 1}`}
+                    required
                   />
                 </div>
               ))}
@@ -175,13 +184,14 @@ export const CreateEdit = () => {
                 {" "}
                 <FaPlus />{" "}
               </button>
+
             </div>
 
             <label
               htmlFor="image"
-              className="flex flex-col items-center p-4 bg-blue-400 rounded-lg shadow-lg cursor-pointer transition duration-300 ease-in-out"
+              className="flex flex-col py-1 gap-2 bg-slate-600 items-center rounded-lg shadow-lg cursor-pointer transition duration-300 ease-in-out"
             >
-              <span className="mt-2 text-base leading-normal">
+              <span className="text-base leading-normal">
                 Upload Image
               </span>
               <input
@@ -190,16 +200,25 @@ export const CreateEdit = () => {
                 id="image"
                 onChange={(e) => setRecipeImage(e.target.files[0])}
                 accept="image/*"
-                className="hidden"
+                className="cursor-pointer"
+                required
               />
             </label>
           </div>
         </div>
+        <div className="flex flex-row justify-center items-center gap-2 w-full">
         <input
           type="submit"
           value="submit"
-          className="w-1/2 sm:w-1/4 mx-auto py-2 cursor-pointer rounded-md bg-green-800"
+          className="w-1/2 sm:w-1/4 mx-auto py-2 cursor-pointer rounded-md bg-green-800 hover:bg-green-950"
         />
+
+        <button
+          type="reset"
+          className="w-1/2 sm:w-1/4 mx-auto py-2 cursor-pointer rounded-md border border-red-600 hover:bg-slate-800"
+        >clear</button>
+        </div>
+
       </form>
     </div>
   );

@@ -1,8 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom"; //use to create routing links
+import { NavLink } from "react-router-dom"; //use to create routing links
 import { GlobalContext } from "../../context";
 import { AiFillCloseSquare, AiOutlineMenu } from "react-icons/ai";
 
+//
 function Navlink({ path, name, onclick }) {
   return (
     <li className="list-none w-fit">

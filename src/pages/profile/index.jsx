@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { FaPen, FaAngleDown, FaAngleUp, FaTimes } from "react-icons/fa";
 import axios from "axios";
 import "ldrs/ring";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 export const Profile = () => {
   const [name, setName] = useState("");
@@ -10,6 +10,14 @@ export const Profile = () => {
   const [loader, setLoader] = useState(false);
   const [expand, setExpand] = useState(false);
   const [expand1, setExpand1] = useState(false);
+  const location = useLocation();
+  const [popMessage, setPopMessage] = useState(location.state?.message || '')
+  useEffect(() => {
+    if(popMessage){
+      const timer = setTimeout(() => setPopMessage(''), 5000);
+      return () => clearTimeout(timer);
+    }
+  },[popMessage])
   const fetchData = async () => {
     setLoader(true);
     try {
@@ -44,6 +52,9 @@ export const Profile = () => {
 
   return (
     <div className="profile container mx-auto h-screen pt-[9rem] flex flex-col gap-11 sm:gap-4">
+       {
+        popMessage && <div className="fixed z-50 top-32 text-sm px-2 py-3 bg-white bg-opacity-85 rounded-md font-semibold tracking-wider text-black left-0">{popMessage}</div>
+      }
       <h1 className="text-2xl sm:text-xl font-bold">Settings</h1>
       <div className="flex items-center justify-between h-2 px-2 sm:py-8 sm:px-1 sm:w-3/5 md:w-2/5 sm:gap-10 rounded-2xl">
         <div className="flex gap-2">

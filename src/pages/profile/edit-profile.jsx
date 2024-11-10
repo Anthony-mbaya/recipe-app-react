@@ -7,7 +7,7 @@ export const EditProfile = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState(null);
+  const [message, setMessage] = useState(null);
   const navigate = useNavigate();
 
   const fetchData = async () => {
@@ -22,7 +22,7 @@ export const EditProfile = () => {
       setName(user.name);
       setEmail(user.email);
     } catch (error) {
-      console.log(error);
+      setMessage(error);
     }
   };
   useEffect(() => {
@@ -31,8 +31,12 @@ export const EditProfile = () => {
   const handlePutData = async (e) => {
     e.preventDefault();
     // handle confirm password
+    if(!name || !email || !password){
+      setMessage("Please fill in all fields");
+      return;
+    }
     if (password !== confirmPassword) {
-      setError("Passwords do not match");
+      setMessage("Passwords do not match");
       return;
     }
 
@@ -50,11 +54,12 @@ export const EditProfile = () => {
         },
       });
       if (res.status === 200) {
-        navigate("/profile");
+        //setSuccess('Successful changes made!')
+        navigate("/profile", {state: {message: 'Successful changes made!'}});
       }
     } catch (error) {
       console.error(error);
-      setError(error);
+      setMessage(error);
     }
   };
 
@@ -65,7 +70,7 @@ export const EditProfile = () => {
         className="container flex flex-col gap-4 mx-auto items-center justify-center text-black font-semibold"
       >
         <h1 className="text-white text-2xl">Edit Profile</h1>
-        <p className="text-red-600">{error}</p>
+        {message && <p className='text-red-600/100 w-full bg-white text-sm font-normal text-center rounded-md py-1'>{message}</p>}
         <input
           type="text"
           name="name"
