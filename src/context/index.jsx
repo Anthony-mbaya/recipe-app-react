@@ -54,7 +54,8 @@ export default function GlobalState({ children }) {
         try {
           //const res = await fetch("https://dummyjson.com/recipes");
           const res = await axios.get(
-            "http://127.0.0.1:8000/api/recipe/recipes/",
+            //"http://127.0.0.1:8000/api/recipe/recipes/",
+            'https://5aa3-105-161-86-39.ngrok-free.app/api/recipe/recipes',
             {
               headers: {
                 Authorization: `Token ${localStorage.getItem("token")}`,
@@ -81,7 +82,8 @@ export default function GlobalState({ children }) {
     if (!images[id]) {
       try {
         const res = await axios.get(
-          `http://127.0.0.1:8000/api/recipe/recipes/${id}/`,
+          //`http://127.0.0.1:8000/api/recipe/recipes/${id}/`,
+          'https://5aa3-105-161-86-39.ngrok-free.app/api/recipe/recipes/${id}/',
           {
             headers: {
               Authorization: `Token ${localStorage.getItem("token")}`,
@@ -109,7 +111,8 @@ export default function GlobalState({ children }) {
     event.preventDefault();
     try {
       setLoading(true);
-      const url = 'http://127.0.0.1:8000/api/recipe/recipes/';
+      //const url = 'http://127.0.0.1:8000/api/recipe/recipes/';
+      const url = 'https://5aa3-105-161-86-39.ngrok-free.app/api/recipe/recipes/';
       const res = await axios.get(url, {
         headers: {
           Authorization: `Token ${localStorage.getItem("token")}`,
