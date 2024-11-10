@@ -147,7 +147,7 @@ const Login = () => {
     }
     try {
       //const token_url = "http://127.0.0.1:8000/api/user/token/";
-      const token_url = "https://randomstring.ngrok.io/api/user/token/";
+      const token_url = "https://5aa3-105-161-86-39.ngrok-free.app/api/user/token/";
       const token_res = await axios.post(token_url, {
         email: email,
         password: password,
@@ -157,7 +157,7 @@ const Login = () => {
       setIsAuth(true);
 
       //const get_url = "http://127.0.0.1:8000/api/user/me/";
-      const get_url = "https://randomstring.ngrok.io/api/user/me/";
+      const get_url = "https://5aa3-105-161-86-39.ngrok-free.app/api/user/me/";
       const get_res = await axios.get(get_url, {
         headers: {
           Authorization: `Token ${token}`,
