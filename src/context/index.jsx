@@ -55,7 +55,7 @@ export default function GlobalState({ children }) {
         try {
           //const res = await fetch("https://dummyjson.com/recipes");
           const url = 'https://5fe9-105-161-86-39.ngrok-free.app/api/recipe/recipes/';
-          const res = await axiosInstance.get(
+          const res = await axios.get(
             //"http://127.0.0.1:8000/api/recipe/recipes/",
             url,
             {
