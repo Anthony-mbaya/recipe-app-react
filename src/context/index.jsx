@@ -54,8 +54,8 @@ export default function GlobalState({ children }) {
       const fetchRecipes = async () => {
         try {
           //const res = await fetch("https://dummyjson.com/recipes");
-          const url = 'https://5fe9-105-161-86-39.ngrok-free.app/api/recipe/recipes/';
-          const res = await axios.get(
+          const url = `${BASE_URL}/api/recipe/recipes/`;
+          const res = await axiosInstance.get(
             //"http://127.0.0.1:8000/api/recipe/recipes/",
             url,
             {
@@ -83,7 +83,7 @@ export default function GlobalState({ children }) {
     //console.log("Fetching image for recipe ID:", id);
     if (!images[id]) {
       try {
-        const url = `https://5fe9-105-161-86-39.ngrok-free.app/api/recipe/recipes/${id}/`;
+        const url = `${BASE_URL}/api/recipe/recipes/${id}/`;
         const res = await axios.get(
           //`http://127.0.0.1:8000/api/recipe/recipes/${id}/`,
           url,
