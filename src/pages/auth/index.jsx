@@ -144,6 +144,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setMsg('');
+
     if(!email || !password){
       setMsg('Please fill in all fields');
       return;
