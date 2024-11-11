@@ -96,7 +96,7 @@ export default function GlobalState({ children }) {
           }
         );
         const data = res.data;
-        setImages((prevImages) => ({ ...prevImages, [id]:  data.image.replace(/^http:\/\//i, "https://"), }));
+        setImages((prevImages) => ({ ...prevImages, [id]: data.image }));
       } catch (error) {
         console.error("error");
       }
@@ -111,6 +111,7 @@ export default function GlobalState({ children }) {
       })
     }
   }, [recipeList]);
+console.log(images);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
