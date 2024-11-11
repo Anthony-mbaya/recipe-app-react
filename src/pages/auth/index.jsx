@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "../../context";
-//import BASE_URL from "../../config";
+import BASE_URL from "../../config";
 //const BASE_URL = process.env.REACT_APP_API_URL;
 import axiosInstance from "../../api_token/axios_instance";
 export const Verification = () => {
@@ -160,8 +160,8 @@ const Login = () => {
       setIsAuth(true);
 
       //const get_url = "http://127.0.0.1:8000/api/user/me/";
-      const get_url = `${BASE_URL}/api/user/me/`;
-      const get_res = await axiosInstance.get(get_url, {
+      const get_url = 'https://5fe9-105-161-86-39.ngrok-free.app/api/user/me/';
+      const get_res = await axios.get(get_url, {
         headers: {
           Authorization: `Token ${token}`,
         },
