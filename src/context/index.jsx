@@ -61,6 +61,7 @@ export default function GlobalState({ children }) {
             {
               headers: {
                 Authorization: `Token ${localStorage.getItem("token")}`,
+                'ngrok-skip-browser-warning': 'true',
               },
             }
           );
@@ -90,6 +91,7 @@ export default function GlobalState({ children }) {
           {
             headers: {
               Authorization: `Token ${localStorage.getItem("token")}`,
+              'ngrok-skip-browser-warning': 'true',
             },
           }
         );
@@ -119,6 +121,7 @@ export default function GlobalState({ children }) {
       const res = await axios.get(url, {
         headers: {
           Authorization: `Token ${localStorage.getItem("token")}`,
+          'ngrok-skip-browser-warning': 'true',
         },
       }
     );

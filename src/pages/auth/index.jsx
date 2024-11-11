@@ -164,6 +164,7 @@ const Login = () => {
       const get_res = await axios.get(get_url, {
         headers: {
           Authorization: `Token ${token}`,
+          'ngrok-skip-browser-warning': 'true',
         },
       });
       const user = get_res.data.name;
