@@ -96,9 +96,7 @@ export default function GlobalState({ children }) {
           }
         );
         const data = res.data;
-        setImages((prevImages) => ({ ...prevImages, [id]: data.image
-          .replace(/^http:\/\//i, "https://") // First replacement for HTTPS
-          .replace("/static/.../recipe/", "/static/media/uploads/recipe/") // Second replacement for path
+        setImages((prevImages) => ({ ...prevImages, [id]: data.image.replace("/static/.../recipe/", "/static/media/uploads/recipe/") // Second replacement for path
        }));
       } catch (error) {
         console.error("error");
