@@ -56,7 +56,7 @@ export default function GlobalState({ children }) {
           //const res = await fetch("https://dummyjson.com/recipes");
           const res = await axios.get(
             //"http://127.0.0.1:8000/api/recipe/recipes/",
-            `${BASE_URL}/api/recipe/recipes`,
+            `${BASE_URL}/api/recipe/recipes/`,
             {
               headers: {
                 Authorization: `Token ${localStorage.getItem("token")}`,
