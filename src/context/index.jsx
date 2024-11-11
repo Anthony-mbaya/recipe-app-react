@@ -2,7 +2,7 @@ import axios from "axios";
 import { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import BASE_URL from "../config";
-import axiosInstance from "../components/api_token/axios_instance";
+import axiosInstance from "../api_token/axios_instance";
 
 export const GlobalContext = createContext(null);
 

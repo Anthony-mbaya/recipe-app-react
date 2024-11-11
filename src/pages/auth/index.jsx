@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "../../context";
 //import BASE_URL from "../../config";
 //const BASE_URL = process.env.REACT_APP_API_URL;
-import axiosInstance from "../../components/api_token/axios_instance";
+import axiosInstance from "../../api_token/axios_instance";
 export const Verification = () => {
   const [changeForm, setChangeForm] = useState(true);
   const [formName, setFormName] = useState(true);
