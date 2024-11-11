@@ -23,7 +23,7 @@ export const Profile = () => {
     setLoader(true);
     try {
       //const url = "http://127.0.0.1:8000/api/user/me/";
-      const url = `${BASE_URL}api/user/me/`;
+      const url = `${BASE_URL}/api/user/me/`;
 
       const res = await axios.get(url, {
         headers: {
