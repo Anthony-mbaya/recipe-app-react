@@ -1,6 +1,7 @@
 import axios from "axios";
 import { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import BASE_URL from "../config";
 
 export const GlobalContext = createContext(null);
 
@@ -55,7 +56,7 @@ export default function GlobalState({ children }) {
           //const res = await fetch("https://dummyjson.com/recipes");
           const res = await axios.get(
             //"http://127.0.0.1:8000/api/recipe/recipes/",
-            'https://5aa3-105-161-86-39.ngrok-free.app/api/recipe/recipes',
+            `${BASE_URL}/api/recipe/recipes`,
             {
               headers: {
                 Authorization: `Token ${localStorage.getItem("token")}`,
@@ -83,7 +84,7 @@ export default function GlobalState({ children }) {
       try {
         const res = await axios.get(
           //`http://127.0.0.1:8000/api/recipe/recipes/${id}/`,
-          'https://5aa3-105-161-86-39.ngrok-free.app/api/recipe/recipes/${id}/',
+          `${BASE_URL}/api/recipe/recipes/${id}/`,
           {
             headers: {
               Authorization: `Token ${localStorage.getItem("token")}`,
@@ -112,7 +113,7 @@ export default function GlobalState({ children }) {
     try {
       setLoading(true);
       //const url = 'http://127.0.0.1:8000/api/recipe/recipes/';
-      const url = 'https://5aa3-105-161-86-39.ngrok-free.app/api/recipe/recipes/';
+      const url = `${BASE_URL}/api/recipe/recipes/`;
       const res = await axios.get(url, {
         headers: {
           Authorization: `Token ${localStorage.getItem("token")}`,

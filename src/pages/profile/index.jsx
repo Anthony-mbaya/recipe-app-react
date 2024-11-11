@@ -3,6 +3,7 @@ import { FaPen, FaAngleDown, FaAngleUp, FaTimes } from "react-icons/fa";
 import axios from "axios";
 import "ldrs/ring";
 import { NavLink, useLocation } from "react-router-dom";
+import BASE_URL from "../../config";
 
 export const Profile = () => {
   const [name, setName] = useState("");
@@ -21,7 +22,8 @@ export const Profile = () => {
   const fetchData = async () => {
     setLoader(true);
     try {
-      const url = "http://127.0.0.1:8000/api/user/me/";
+      //const url = "http://127.0.0.1:8000/api/user/me/";
+      const url = `${BASE_URL}api/user/me/`;
 
       const res = await axios.get(url, {
         headers: {

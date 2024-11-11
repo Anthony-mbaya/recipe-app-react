@@ -4,6 +4,7 @@ import { GlobalContext } from "../../context";
 import { FaCheckCircle, FaHeart } from "react-icons/fa";
 import axios from "axios";
 import "ldrs/ring";
+import BASE_URL from "../../config";
 
 export const Details = () => {
   //used to retrieve the dynamic parameters from the current route
@@ -30,7 +31,8 @@ export const Details = () => {
     async function getRecipeDetails() {
       //const res = await fetch(`https://dummyjson.com/recipes/${id}`);
       const res = await axios.get(
-        `http://127.0.0.1:8000/api/recipe/recipes/${id}/`,
+       // `http://127.0.0.1:8000/api/recipe/recipes/${id}/`,
+       `${BASE_URL}/api/recipe/recipes/${id}/`,
         {
           headers: {
             Authorization: `Token ${localStorage.getItem("token")}`,
@@ -102,7 +104,8 @@ export const Details = () => {
 
   const handleDeleteRecipe = async (id) =>{
     try{
-    const deleteUrl = `http://127.0.0.1:8000/api/recipe/recipes/${id}/`;
+    //const deleteUrl = `http://127.0.0.1:8000/api/recipe/recipes/${id}/`;
+    const deleteUrl = `${BASE_URL}/api/recipe/recipes/${id}/`;
     const res = await axios.delete(deleteUrl, {
       headers: {
       Authorization: `Token ${localStorage.getItem('token')}`,

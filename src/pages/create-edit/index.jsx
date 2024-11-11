@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "../../context";
 //import { useParams } from "react-router-dom";
+import BASE_URL from "../../config";
 
 export const CreateEdit = () => {
   //const { id } = useParams();
@@ -51,7 +52,8 @@ export const CreateEdit = () => {
         },
       };
 
-      const recipe_data_url = "http://127.0.0.1:8000/api/recipe/recipes/";
+      //const recipe_data_url = "http://127.0.0.1:8000/api/recipe/recipes/";
+      const recipe_data_url = `${BASE_URL}/api/recipe/recipes/`;
 
       //const imageReturnedUrl = imgResponse.data.image;
       const response = await axios.post(
@@ -76,7 +78,8 @@ export const CreateEdit = () => {
       if (currRecipeId && recipeImage) {
         formData.append("image", recipeImage);
       }
-      const image_upload_url = `http://127.0.0.1:8000/api/recipe/recipes/${currRecipeId}/upload-image/`;
+      //const image_upload_url = `http://127.0.0.1:8000/api/recipe/recipes/${currRecipeId}/upload-image/`;
+      const image_upload_url = `${BASE_URL}/api/recipe/recipes/${currRecipeId}/upload-image/`;
       const imgResponse = await axios.post(image_upload_url, formData, {
         headers: {
           Authorization: `Token ${localStorage.getItem("token")}`,

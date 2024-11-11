@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import BASE_URL from "../../config";
 
 export const EditProfile = () => {
   const [name, setName] = useState("");
@@ -12,7 +13,8 @@ export const EditProfile = () => {
 
   const fetchData = async () => {
     try {
-      const fetch_url = "http://127.0.0.1:8000/api/user/me/";
+      //const fetch_url = "http://127.0.0.1:8000/api/user/me/";
+      const fetch_url = `${BASE_URL}/api/user/me/`;
       const res = await axios.get(fetch_url, {
         headers: {
           Authorization: `Token ${localStorage.getItem("token")}`,
@@ -41,7 +43,8 @@ export const EditProfile = () => {
     }
 
     try {
-      const put_url = "http://127.0.0.1:8000/api/user/me/";
+      //const put_url = "http://127.0.0.1:8000/api/user/me/";
+      const put_url = `${BASE_URL}/api/user/me/`;
       const payload = {
         name: name,
         email: email,
