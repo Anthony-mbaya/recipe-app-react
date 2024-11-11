@@ -96,7 +96,7 @@ export default function GlobalState({ children }) {
           }
         );
         const data = res.data;
-        setImages((prevImages) => ({ ...prevImages, [id]: data.image.replace("/static/m.../recipe/", "/static/media/uploads/recipe/") // Second replacement for path
+        setImages((prevImages) => ({ ...prevImages, [id]: data.image
        }));
       } catch (error) {
         console.error("error");
