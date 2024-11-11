@@ -2,6 +2,7 @@ import axios from "axios";
 import { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import BASE_URL from "../config";
+import axiosInstance from "../components/api_token/axios_instance";
 
 export const GlobalContext = createContext(null);
 
@@ -54,9 +55,10 @@ export default function GlobalState({ children }) {
       const fetchRecipes = async () => {
         try {
           //const res = await fetch("https://dummyjson.com/recipes");
-          const res = await axios.get(
+          const url = `${BASE_URL}/api/recipe/recipes/`;
+          const res = await axiosInstance.get(
             //"http://127.0.0.1:8000/api/recipe/recipes/",
-            `${BASE_URL}/api/recipe/recipes/`,
+            url,
             {
               headers: {
                 Authorization: `Token ${localStorage.getItem("token")}`,
@@ -82,9 +84,10 @@ export default function GlobalState({ children }) {
     //console.log("Fetching image for recipe ID:", id);
     if (!images[id]) {
       try {
+        const url = `${BASE_URL}/api/recipe/recipes/${id}/`;
         const res = await axios.get(
           //`http://127.0.0.1:8000/api/recipe/recipes/${id}/`,
-          `${BASE_URL}/api/recipe/recipes/${id}/`,
+          url,
           {
             headers: {
               Authorization: `Token ${localStorage.getItem("token")}`,
