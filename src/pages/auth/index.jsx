@@ -169,7 +169,7 @@ const Login = () => {
       });
       const user = get_res.data.name;
       if (user) {
-        setGetUserName(user);
+        setiGetUserName(user);
         localStorage.setItem("user", user);
       } else {
         setGetUserName("");
