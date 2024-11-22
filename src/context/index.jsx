@@ -60,8 +60,7 @@ export default function GlobalState({ children }) {
             url,
             {
               headers: {
-                Authorization: `Token ${localStorage.getItem("token")}`,
-                'ngrok-skip-browser-warning': 'true',
+                Authorization: `Token ${localStorage.getItem("token")}`, 
               },
             }
           );
@@ -90,8 +89,7 @@ export default function GlobalState({ children }) {
           url,
           {
             headers: {
-              Authorization: `Token ${localStorage.getItem("token")}`,
-              'ngrok-skip-browser-warning': 'true',
+              Authorization: `Token ${localStorage.getItem("token")}`, 
             },
           }
         );
@@ -122,8 +120,7 @@ console.log(images);
       const url = `${BASE_URL}/api/recipe/recipes/`;
       const res = await axios.get(url, {
         headers: {
-          Authorization: `Token ${localStorage.getItem("token")}`,
-          'ngrok-skip-browser-warning': 'true',
+          Authorization: `Token ${localStorage.getItem("token")}`, 
         },
       }
     );
